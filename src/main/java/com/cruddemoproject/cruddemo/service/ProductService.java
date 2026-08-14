@@ -50,5 +50,11 @@ public class ProductService {
         }
         return false;
     }
+
+    // test function
+    public boolean testProduct()
+    {
+        return false;
+    }
 }
 
