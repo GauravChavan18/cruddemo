@@ -58,5 +58,15 @@ public class ProductController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testProduct() {
+        boolean result = productService.testProduct();
+        if (result) {
+            return new ResponseEntity<>("Test passed", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Test failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
