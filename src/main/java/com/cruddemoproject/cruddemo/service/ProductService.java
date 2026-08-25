@@ -15,7 +15,16 @@ public class ProductService {
 
     // Create a new product
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+
+        if(product.getPrice()>=0)
+        {
+            return productRepository.save(product);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
     }
 
     // Get all products
