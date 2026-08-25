@@ -68,5 +68,18 @@ public class ProductController {
             return new ResponseEntity<>("Test failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Product> getProductById(@PathVariable String name) {
+        Product product = productService.getProductByName(name);
+        if (product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }
 

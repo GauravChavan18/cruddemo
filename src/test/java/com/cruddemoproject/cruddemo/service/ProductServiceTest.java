@@ -160,5 +160,41 @@ class ProductServiceTest {
         assertEquals(0, result.size());
         verify(productRepository, times(1)).findAll();
     }
-}
 
+    @Test
+    @DisplayName("Should get product by name")
+    void testGetProductByName() {
+        when(productRepository.findByName("Laptop")).thenReturn(Optional.of(product1));
+        
+        Product result = productService.getProductByName("Laptop");
+        
+        assertNotNull(result);
+        assertEquals("Laptop", result.getName());
+        assertEquals(999.99, result.getPrice());
+        verify(productRepository, times(1)).findByName("Laptop");
+    }
+
+    @Test
+    @DisplayName("Should throw exception when product not found by name")
+    void testGetProductByNameNotFound() {
+        when(productRepository.findByName("NonExistent")).thenReturn(Optional.empty());
+        
+        assertThrows(RuntimeException.class, () -> {
+            productService.getProductByName("NonExistent");
+        });
+        verify(productRepository, times(1)).findByName("NonExistent");
+    }
+
+    @Test
+    @DisplayName("Should throw exception with correct message when product not found by name")
+    void testGetProductByNameNotFoundWithMessage() {
+        when(productRepository.findByName("NonExistent")).thenReturn(Optional.empty());
+        
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            productService.getProductByName("NonExistent");
+        });
+        
+        assertTrue(exception.getMessage().contains("Product not found with name: NonExistent"));
+        verify(productRepository, times(1)).findByName("NonExistent");
+    }
+}
