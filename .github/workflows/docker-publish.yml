@@ -51,4 +51,5 @@ jobs:
           echo "Pushed images:"
           echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:dev"
           echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.event.workflow_run.head_sha }}"
+          
 
