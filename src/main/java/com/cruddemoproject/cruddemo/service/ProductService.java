@@ -63,8 +63,8 @@ public class ProductService {
     // test function
     public boolean testProduct()
     {
-        // This changes for - feature/change-message-2
-        return false;
+        // changes for feature/change-message
+        return true;
     }
 
     public Product getProductByName(String name) {
