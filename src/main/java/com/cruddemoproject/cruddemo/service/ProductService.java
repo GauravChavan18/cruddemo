@@ -56,5 +56,14 @@ public class ProductService {
     {
         return false;
     }
+
+    public Product getProductByName(String name) {
+
+        Product product = productRepository.
+                findByName(name).orElseThrow(()-> new RuntimeException("Product not found with name: " + name));
+
+        return product;
+
+    }
 }
 
