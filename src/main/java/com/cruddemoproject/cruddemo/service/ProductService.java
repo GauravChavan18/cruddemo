@@ -15,7 +15,16 @@ public class ProductService {
 
     // Create a new product
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+
+        if(product.getPrice()>=0)
+        {
+            return productRepository.save(product);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
     }
 
     // Get all products
@@ -54,7 +63,22 @@ public class ProductService {
     // test function
     public boolean testProduct()
     {
-        return false;
+        // changes for feature/change-message
+        return true;
+    }
+
+    public Product getProductByName(String name) {
+
+        Product product = productRepository.
+                findByName(name).orElseThrow(()-> new RuntimeException("Product not found with name: " + name));
+
+        return product;
+
+    }
+
+    public void ProductSorting()
+    {
+        // for feature/product-sorting
     }
 }
 
