@@ -1,13 +1,17 @@
 name: Build and publish Docker image
 
 on:
-  push:
-    branches:
-        - develop
+  workflow_run:
+    workflows: ["Java CI"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
   build-and-push:
+    if: >
+      ${{ github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'develop' }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,11 +44,11 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:dev
-            ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.event.workflow_run.head_sha }}
 
       - name: Image info
         run: |
           echo "Pushed images:"
           echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:dev"
-          echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.sha }}"
+          echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.event.workflow_run.head_sha }}"
 
