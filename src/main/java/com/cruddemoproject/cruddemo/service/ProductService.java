@@ -75,5 +75,10 @@ public class ProductService {
         return product;
 
     }
+
+    public void ProductSorting()
+    {
+        // for feature/product-sorting
+    }
 }
 
