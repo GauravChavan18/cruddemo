@@ -2,7 +2,8 @@ name: Build and publish Docker image
 
 on:
   push:
-    branches: [ main ]
+    branches:
+        - develop
   workflow_dispatch:
 
 jobs:
@@ -38,12 +39,12 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:dev
             ${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.sha }}
 
       - name: Image info
         run: |
           echo "Pushed images:"
-          echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:latest"
+          echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:dev"
           echo "${{ secrets.DOCKERHUB_USERNAME }}/cruddemo:${{ github.sha }}"
 
